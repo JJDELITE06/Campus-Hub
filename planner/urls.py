@@ -76,3 +76,10 @@ urlpatterns += [
     path("events/<int:event_id>/edit/", event_controller.edit_event, name="event_edit"),
     path("events/<int:event_id>/delete/", event_controller.delete_event, name="event_delete"),
 ]
+
+# --- Step 10: Settings for the reminder email (US-11) ---
+from .controllers import settings_controller
+
+urlpatterns += [
+    path("settings/", settings_controller.show_settings, name="settings"),
+]
