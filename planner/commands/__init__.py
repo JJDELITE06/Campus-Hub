@@ -21,3 +21,7 @@ register(AddCourseCommand)
 from .drop_course import DropCourseCommand
 register(DropCourseCommand)
 
+# --- Step 4: Add an item ---
+from .add_item import AddItemCommand
+register(AddItemCommand)
+

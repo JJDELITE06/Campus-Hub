@@ -1,0 +1,37 @@
+{% extends "planner/base.html" %}
+{# item_list.html -- the main page: filters, the to-do list and the completed list. #}
+{% block title %}My Planner - Campus Hub{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap align-items-center justify-content-between mb-3 gap-2">
+    <h1 class="h3 mb-0">My Planner</h1>
+    <div>
+        <a class="btn btn-primary" href="{% url 'item_add' %}"><i class="bi bi-plus-lg"></i> Add item</a>
+    </div>
+</div>
+
+{# ---- Reminder banner: things due today or tomorrow ---- #}
+{% if due_soon %}
+<div class="alert alert-warning">
+    <strong><i class="bi bi-bell"></i> Due soon:</strong>
+    {% for item in due_soon %}{{ item.title }}{% if not forloop.last %}, {% endif %}{% endfor %}
+</div>
+{% endif %}
+
+{# ---- To do ---- #}
+<h2 class="h5"><i class="bi bi-hourglass-split"></i> To do <span class="badge text-bg-secondary">{{ to_do|length }}</span></h2>
+{% for item in to_do %}
+    <div class="item-row d-flex align-items-center p-2 mb-2" style="border-left-color: {{ item.course.color|default:'#adb5bd' }}">
+        <div class="flex-grow-1">
+            <span class="item-title fw-semibold">{{ item.title }}</span>
+            <div>{% include "planner/_item_badges.html" %}</div>
+        </div>
+    </div>
+{% empty %}
+    {# {% empty %} runs when the list has nothing in it. #}
+    <div class="card hub-card mb-3"><div class="card-body text-center text-muted">
+        <i class="bi bi-emoji-smile fs-3"></i><br>You're all caught up!
+    </div></div>
+{% endfor %}
+
+{% endblock %}

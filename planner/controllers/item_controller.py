@@ -1,0 +1,82 @@
+# planner/controllers/item_controller.py -- ItemController (UML CD-5).
+# The main list plus add, edit, delete, complete and undo.
+#
+# Look how short each function is: the controller only passes the request on
+# to a COMMAND. All the rules are somewhere else.
+
+from datetime import date, timedelta
+
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
+
+from planner.commands import AddItemCommand
+from planner.factories import all_creators
+
+from .helpers import get_invoker, get_student
+
+# "@login_required" (used below) is a DECORATOR: a label you put on top of a
+# function to add behaviour to it. This one means "if nobody is logged in,
+# send them to the login page instead of running the function".
+
+
+def form_page(request, student, data, errors, heading, item=None):
+    """Shows the add/edit form. Shared by add_item() and edit_item()."""
+    context = {
+        "data": data,                      # what to put in the boxes
+        "errors": errors,                  # problems to show at the top
+        "heading": heading,                # "Add an item" or "Edit item"
+        "item": item,                      # None when adding
+        "creators": all_creators(),        # fills the Type dropdown (FACTORY)
+        "courses": student.get_courses(),  # fills the Class dropdown
+    }
+    return render(request, "planner/item_form.html", context)
+
+
+@login_required
+def show_list(request):
+    """UML: showList(filter : ItemFilter)   The main page (US-03, US-08, US-09)."""
+    student = get_student(request)
+
+    # ---- get this student's items, sorted by due date
+    items = student.get_items()
+
+    # ---- split into the two sections of the page
+    today = date.today()
+    to_do = []
+    completed = []
+    due_soon = []          # for the yellow reminder banner
+    for item in items:
+        if item.is_completed():
+            completed.append(item)
+        else:
+            to_do.append(item)
+            if today <= item.due_date <= today + timedelta(days=1):
+                due_soon.append(item)
+
+    context = {
+        "to_do": to_do,
+        "completed": completed,
+        "due_soon": due_soon,
+        "courses": student.get_courses(),
+        "creators": all_creators(),
+    }
+    return render(request, "planner/item_list.html", context)
+
+
+@login_required
+def add_item(request):
+    """UML: showAddForm() and addItem(formData)   (US-05, SD-03)"""
+    student = get_student(request)
+    if request.method != "POST":
+        # Start the date box on today, to save typing.
+        data = {"due_date": date.today().strftime("%Y-%m-%d"), "item_type": "ASSIGNMENT"}
+        return form_page(request, student, data, [], "Add an item")
+
+    # request.POST.dict() turns the form into a normal Python dictionary.
+    data = request.POST.dict()
+    command = AddItemCommand(student, data)          # 1. build the command
+    if get_invoker(request).run(command):            # 2. the invoker runs it
+        messages.success(request, command.message, extra_tags="undo")
+        return redirect("item_list")                 # 3. back to the list
+    return form_page(request, student, data, command.errors, "Add an item")

@@ -41,3 +41,11 @@ urlpatterns += [
     path("courses/add/", course_controller.add_course, name="course_add"),
     path("courses/<int:course_id>/drop/", course_controller.drop_course, name="course_drop"),
 ]
+
+# --- Step 4: The list and adding an item (US-05) ---
+from .controllers import item_controller
+
+urlpatterns += [
+    path("items/", item_controller.show_list, name="item_list"),
+    path("items/add/", item_controller.add_item, name="item_add"),
+]

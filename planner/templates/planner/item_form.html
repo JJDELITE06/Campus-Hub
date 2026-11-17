@@ -1,0 +1,65 @@
+{% extends "planner/base.html" %}
+{# item_form.html -- ONE form used for both "Add an item" and "Edit item" (US-05, US-07). #}
+{# "data" holds what to show in each box, so a form with errors keeps what was typed. #}
+{% block title %}{{ heading }} - Campus Hub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-8">
+<div class="card hub-card"><div class="card-body p-4">
+    <h1 class="h3 mb-3">{{ heading }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="row g-3">
+            <div class="col-md-8">
+                <label class="form-label" for="title">Title</label>
+                <input class="form-control" id="title" name="title" value="{{ data.title }}" required autofocus>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="item_type">Type</label>
+                {# This dropdown is filled from the FACTORY registry. A new creator class shows up here by itself. #}
+                <select class="form-select" id="item_type" name="item_type">
+                    {% for creator in creators %}
+                        <option value="{{ creator.type_code }}" {% if data.item_type == creator.type_code %}selected{% endif %}>{{ creator.label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label" for="course_id">Class or activity</label>
+                <select class="form-select" id="course_id" name="course_id">
+                    <option value="">(none)</option>
+                    {% for course in courses %}
+                        <option value="{{ course.pk }}" {% if data.course_id == course.pk|stringformat:"s" %}selected{% endif %}>{{ course.get_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="due_date">Date</label>
+                {# type="date" and type="time" make the browser show its own date and time pickers. #}
+                <input class="form-control" id="due_date" name="due_date" type="date" value="{{ data.due_date }}" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="due_time">Time (due or start)</label>
+                <input class="form-control" id="due_time" name="due_time" type="time" value="{{ data.due_time }}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="end_time">End time (optional)</label>
+                <input class="form-control" id="end_time" name="end_time" type="time" value="{{ data.end_time }}">
+            </div>
+            <div class="col-md-12">
+                <label class="form-label" for="location">Location</label>
+                <input class="form-control" id="location" name="location" value="{{ data.location }}" placeholder="A classroom, Teams, Blackboard...">
+            </div>
+            <div class="col-md-12">
+                <label class="form-label" for="notes">Notes</label>
+                <textarea class="form-control" id="notes" name="notes" rows="3">{{ data.notes }}</textarea>
+            </div>
+        </div>
+        <div class="mt-4 d-flex gap-2">
+            <button class="btn btn-primary" type="submit"><i class="bi bi-check-lg"></i> Save</button>
+            {# Cancel is just a link back to the list: nothing is saved. #}
+            <a class="btn btn-outline-secondary" href="{% url 'item_list' %}">Cancel</a>
+        </div>
+    </form>
+</div></div>
+</div></div>
+{% endblock %}
