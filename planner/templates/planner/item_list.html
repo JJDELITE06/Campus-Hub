@@ -18,6 +18,36 @@
 </div>
 {% endif %}
 
+{# ---- Filters (US-03 and US-09). method="get" puts the choices in the address: /items/?course=3&type=MEETING ---- #}
+<form method="get" class="card hub-card mb-4"><div class="card-body row g-2 align-items-end">
+    <div class="col-sm-5">
+        <label class="form-label small mb-1" for="course">Class or activity</label>
+        {# onchange="this.form.submit()" sends the form as soon as a choice is picked. #}
+        <select class="form-select" id="course" name="course" onchange="this.form.submit()">
+            <option value="">All</option>
+            {% for course in courses %}
+                <option value="{{ course.pk }}" {% if selected_course == course.pk|stringformat:"s" %}selected{% endif %}>{{ course.get_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-sm-5">
+        <label class="form-label small mb-1" for="type">Type</label>
+        <select class="form-select" id="type" name="type" onchange="this.form.submit()">
+            <option value="">All</option>
+            {% for creator in creators %}
+                <option value="{{ creator.type_code }}" {% if selected_type == creator.type_code %}selected{% endif %}>{{ creator.label }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-sm-2 d-grid">
+        {% if item_filter.is_active %}
+            <a class="btn btn-outline-secondary" href="{% url 'item_list' %}">Show all</a>
+        {% else %}
+            <button class="btn btn-outline-secondary" type="submit">Filter</button>
+        {% endif %}
+    </div>
+</div></form>
+
 {# ---- To do ---- #}
 <h2 class="h5"><i class="bi bi-hourglass-split"></i> To do <span class="badge text-bg-secondary">{{ to_do|length }}</span></h2>
 {% for item in to_do %}

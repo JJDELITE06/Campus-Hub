@@ -18,6 +18,7 @@
                     {% if course.is_activity %}<span class="badge text-bg-success">Activity</span>{% else %}<span class="badge text-bg-primary">Class</span>{% endif %}
                     {{ course.count_items }} item(s)
                 </p>
+                <a class="btn btn-sm btn-outline-secondary" href="{% url 'item_list' %}?course={{ course.pk }}">Show its items</a>
                 <a class="btn btn-sm btn-outline-danger" href="{% url 'course_drop' course.pk %}">Drop</a>
             </div>
         </div>

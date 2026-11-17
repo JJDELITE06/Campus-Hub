@@ -17,8 +17,9 @@ from planner.commands import (
     EditItemCommand,
     MarkCompleteCommand,
 )
-from planner.factories import all_creators
+from planner.factories import all_creators, get_creator
 from planner.models import Item
+from planner.services.item_filter import ItemFilter
 
 from .helpers import get_invoker, get_student
 
@@ -45,8 +46,17 @@ def show_list(request):
     """UML: showList(filter : ItemFilter)   The main page (US-03, US-08, US-09)."""
     student = get_student(request)
 
-    # ---- get this student's items, sorted by due date
-    items = student.get_items()
+    # ---- build the filter from the address, e.g. /items/?course=3&type=MEETING
+    item_filter = ItemFilter()
+    course_id = request.GET.get("course", "")
+    type_code = request.GET.get("type", "")
+    if course_id.isdigit():
+        item_filter.set_course(student.courses.filter(pk=int(course_id)).first())
+    if get_creator(type_code) is not None:
+        item_filter.set_type(type_code)
+
+    # ---- get this student's items and let the filter choose
+    items = item_filter.apply(student.get_items())
 
     # ---- split into the two sections of the page
     today = date.today()
@@ -67,6 +77,9 @@ def show_list(request):
         "due_soon": due_soon,
         "courses": student.get_courses(),
         "creators": all_creators(),
+        "item_filter": item_filter,
+        "selected_course": course_id,
+        "selected_type": type_code,
     }
     return render(request, "planner/item_list.html", context)
 
