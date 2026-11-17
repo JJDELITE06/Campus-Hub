@@ -1,5 +1,6 @@
 # planner/controllers/helpers.py -- small helpers shared by the controllers.
 
+from planner.commands import CommandInvoker
 from planner.models import Student
 
 
@@ -13,6 +14,15 @@ def get_student(request):
     """
     student, was_created = Student.objects.get_or_create(user=request.user)
     return student
+
+
+def get_invoker(request):
+    """
+    Returns the Command pattern INVOKER for this browser.
+    request.session is the small "notebook" Django keeps for each logged-in
+    browser. The invoker writes the last command in it so Undo can work.
+    """
+    return CommandInvoker(request.session)
 
 
 def is_admin(user):

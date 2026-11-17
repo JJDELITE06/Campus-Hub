@@ -1,0 +1,31 @@
+{% extends "planner/base.html" %}
+{# course_list.html -- the student's classes and activities (UC-09, UC-10). #}
+{% block title %}Classes - Campus Hub{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0">Classes and activities</h1>
+    <a class="btn btn-primary" href="{% url 'course_add' %}"><i class="bi bi-plus-lg"></i> Add</a>
+</div>
+
+<div class="row g-3">
+{% for course in courses %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card hub-card h-100" style="border-top: 6px solid {{ course.color }}">
+            <div class="card-body">
+                <h2 class="h5">{{ course.get_name }}</h2>
+                <p class="text-muted mb-2">
+                    {% if course.is_activity %}<span class="badge text-bg-success">Activity</span>{% else %}<span class="badge text-bg-primary">Class</span>{% endif %}
+                    {{ course.count_items }} item(s)
+                </p>
+                <a class="btn btn-sm btn-outline-danger" href="{% url 'course_drop' course.pk %}">Drop</a>
+            </div>
+        </div>
+    </div>
+{% empty %}
+    <div class="col-12"><div class="card hub-card"><div class="card-body text-center text-muted">
+        No classes yet. Add your first one so you can group your items.
+    </div></div></div>
+{% endfor %}
+</div>
+{% endblock %}

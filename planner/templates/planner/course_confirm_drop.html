@@ -1,0 +1,18 @@
+{% extends "planner/base.html" %}
+{# course_confirm_drop.html -- "are you sure" before dropping a class (UC-10 step 3). #}
+{% block title %}Drop a class - Campus Hub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center"><div class="col-md-7">
+<div class="card hub-card"><div class="card-body p-4 text-center">
+    <i class="bi bi-exclamation-triangle text-danger fs-1"></i>
+    <h1 class="h4">Drop {{ course.get_name }}?</h1>
+    <p>This will also delete its <strong>{{ course.count_items }}</strong> item(s) and its repeating events. This can't be undone.</p>
+    <form method="post" class="d-flex justify-content-center gap-2">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit">Yes, drop it</button>
+        <a class="btn btn-outline-secondary" href="{% url 'course_list' %}">Cancel</a>
+    </form>
+</div></div>
+</div></div>
+{% endblock %}
