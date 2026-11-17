@@ -1,0 +1,51 @@
+// .vscode/launch.json -- the "recipes" VS Code uses when you press F5
+// or the green play button in the "Run and Debug" panel.
+//
+// WHY THIS FILE EXISTS:
+//   The normal play button at the top right of the editor only runs
+//   "python <the file that is open>". It can't add extra words after
+//   the file name. To start Django we need to run:
+//       python manage.py runserver
+//   The word "runserver" is an ARGUMENT (an extra instruction we give
+//   to manage.py). This file tells VS Code to add it for us.
+//
+// Other editors ignore this file. The terminal command always works too.
+{
+    // Version of this file's format. VS Code needs it. Don't change it.
+    "version": "0.2.0",
+
+    // A list of recipes. Each one appears in the dropdown next to the
+    // green play button in the Run and Debug panel.
+    "configurations": [
+        {
+            // The name shown in the dropdown.
+            "name": "Campus Hub: Run Django server",
+
+            // "debugpy" = run it with the Python debugger,
+            // so breakpoints (red dots) work.
+            "type": "debugpy",
+
+            // "launch" = start a new program (instead of attaching to one
+            // that's already running).
+            "request": "launch",
+
+            // The file to run. ${workspaceFolder} = the Campus-Hub folder.
+            "program": "${workspaceFolder}/manage.py",
+
+            // The ARGUMENTS added after the file name. Together this runs:
+            //   python manage.py runserver
+            // To use another port, add it, for example: ["runserver", "8080"]
+            "args": ["runserver"],
+
+            // Tells VS Code this is a Django project, so it can also
+            // stop at breakpoints inside HTML templates.
+            "django": true,
+
+            // Show the output in VS Code's built-in terminal.
+            "console": "integratedTerminal",
+
+            // false = only stop in OUR code, not inside Django's own code.
+            "justMyCode": true
+        }
+    ]
+}
