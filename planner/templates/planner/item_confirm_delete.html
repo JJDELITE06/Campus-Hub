@@ -1,0 +1,18 @@
+{% extends "planner/base.html" %}
+{# item_confirm_delete.html -- the "Do you really want to delete this?" page (US-04). #}
+{% block title %}Delete item - Campus Hub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center"><div class="col-md-7">
+<div class="card hub-card"><div class="card-body p-4 text-center">
+    <i class="bi bi-exclamation-triangle text-danger fs-1"></i>
+    <h1 class="h4">Do you really want to delete this?</h1>
+    <p class="fw-semibold">{{ item.title }}</p>
+    <form method="post" class="d-flex justify-content-center gap-2">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit">Yes, delete it</button>
+        <a class="btn btn-outline-secondary" href="{% url 'item_list' %}">Cancel</a>
+    </form>
+</div></div>
+</div></div>
+{% endblock %}

@@ -25,3 +25,16 @@ register(DropCourseCommand)
 from .add_item import AddItemCommand
 register(AddItemCommand)
 
+# --- Step 6: Edit, delete, complete, delete many ---
+from .edit_item import EditItemCommand
+register(EditItemCommand)
+
+from .delete_item import DeleteItemCommand
+register(DeleteItemCommand)
+
+from .mark_complete import MarkCompleteCommand
+register(MarkCompleteCommand)
+
+from .delete_selected import DeleteSelectedCommand
+register(DeleteSelectedCommand)
+

@@ -8,10 +8,17 @@ from datetime import date, timedelta
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
-from planner.commands import AddItemCommand
+from planner.commands import (
+    AddItemCommand,
+    DeleteItemCommand,
+    DeleteSelectedCommand,
+    EditItemCommand,
+    MarkCompleteCommand,
+)
 from planner.factories import all_creators
+from planner.models import Item
 
 from .helpers import get_invoker, get_student
 
@@ -80,3 +87,79 @@ def add_item(request):
         messages.success(request, command.message, extra_tags="undo")
         return redirect("item_list")                 # 3. back to the list
     return form_page(request, student, data, command.errors, "Add an item")
+
+
+@login_required
+def edit_item(request, item_id):
+    """UML: showEditForm(itemId) and editItem(itemId, formData)   (US-07, SD-05)"""
+    student = get_student(request)
+    # get_object_or_404: find the item, or show a "404 Not Found" page.
+    # owner=student makes it impossible to open someone else's item (NFR-04).
+    item = get_object_or_404(Item, pk=item_id, owner=student)
+
+    if request.method != "POST":
+        return form_page(request, student, item.to_form_data(), [], "Edit item", item)
+
+    data = request.POST.dict()
+    data["item_id"] = item_id
+    command = EditItemCommand(student, data)
+    if get_invoker(request).run(command):
+        messages.success(request, command.message, extra_tags="undo")
+        return redirect("item_list")
+    return form_page(request, student, data, command.errors, "Edit item", item)
+
+
+@login_required
+def delete_item(request, item_id):
+    """UML: deleteItem(itemId)   GET asks "are you sure?", POST deletes (US-04, SD-06)."""
+    student = get_student(request)
+    item = get_object_or_404(Item, pk=item_id, owner=student)
+
+    if request.method != "POST":
+        return render(request, "planner/item_confirm_delete.html", {"item": item})
+
+    command = DeleteItemCommand(student, {"item_id": item_id})
+    if get_invoker(request).run(command):
+        messages.success(request, command.message, extra_tags="undo")
+    return redirect("item_list")
+
+
+@login_required
+def delete_selected(request):
+    """UML: deleteSelected(itemIds : List<int>)   (UC-08, SD-08)"""
+    student = get_student(request)
+    if request.method == "POST":
+        # getlist() collects the value of EVERY ticked checkbox named "item_ids".
+        item_ids = request.POST.getlist("item_ids")
+        command = DeleteSelectedCommand(student, {"item_ids": item_ids})
+        if get_invoker(request).run(command):
+            messages.success(request, command.message, extra_tags="undo")
+        else:
+            messages.error(request, command.errors[0])
+    return redirect("item_list")
+
+
+@login_required
+def mark_complete(request, item_id):
+    """UML: markComplete(itemId, done : Boolean)   (US-08, SD-07)"""
+    student = get_student(request)
+    if request.method == "POST":
+        # The button sends done=1 (mark complete) or done=0 (not done).
+        done = request.POST.get("done") == "1"
+        command = MarkCompleteCommand(student, {"item_id": item_id, "done": done})
+        if get_invoker(request).run(command):
+            messages.success(request, command.message, extra_tags="undo")
+    return redirect("item_list")
+
+
+@login_required
+def undo(request):
+    """The Undo button: asks the invoker to reverse the last command."""
+    student = get_student(request)
+    if request.method == "POST":
+        command = get_invoker(request).undo_last(student)
+        if command is None:
+            messages.info(request, "There is nothing to undo.")
+        else:
+            messages.success(request, command.message)
+    return redirect("item_list")

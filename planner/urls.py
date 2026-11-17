@@ -49,3 +49,12 @@ urlpatterns += [
     path("items/", item_controller.show_list, name="item_list"),
     path("items/add/", item_controller.add_item, name="item_add"),
 ]
+
+# --- Step 6: Edit, delete, complete, delete many, undo (US-04, US-07, US-08) ---
+urlpatterns += [
+    path("items/<int:item_id>/edit/", item_controller.edit_item, name="item_edit"),
+    path("items/<int:item_id>/delete/", item_controller.delete_item, name="item_delete"),
+    path("items/<int:item_id>/complete/", item_controller.mark_complete, name="item_complete"),
+    path("items/delete-selected/", item_controller.delete_selected, name="items_delete_selected"),
+    path("undo/", item_controller.undo, name="undo"),
+]

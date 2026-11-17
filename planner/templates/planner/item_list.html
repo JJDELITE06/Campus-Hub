@@ -22,9 +22,19 @@
 <h2 class="h5"><i class="bi bi-hourglass-split"></i> To do <span class="badge text-bg-secondary">{{ to_do|length }}</span></h2>
 {% for item in to_do %}
     <div class="item-row d-flex align-items-center p-2 mb-2" style="border-left-color: {{ item.course.color|default:'#adb5bd' }}">
+        {# The round tick button sends done=1 to mark the item complete. #}
+        <form method="post" action="{% url 'item_complete' item.pk %}" class="me-2">
+            {% csrf_token %}
+            <input type="hidden" name="done" value="1">
+            <button class="btn btn-outline-success check-button" type="submit" title="Mark complete" aria-label="Mark {{ item.title }} complete"><i class="bi bi-check-lg"></i></button>
+        </form>
         <div class="flex-grow-1">
             <span class="item-title fw-semibold">{{ item.title }}</span>
             <div>{% include "planner/_item_badges.html" %}</div>
+        </div>
+        <div class="text-nowrap">
+            <a class="btn btn-sm btn-outline-secondary" href="{% url 'item_edit' item.pk %}" title="Edit" aria-label="Edit {{ item.title }}"><i class="bi bi-pencil"></i></a>
+            <a class="btn btn-sm btn-outline-danger" href="{% url 'item_delete' item.pk %}" title="Delete" aria-label="Delete {{ item.title }}"><i class="bi bi-trash"></i></a>
         </div>
     </div>
 {% empty %}
@@ -34,4 +44,70 @@
     </div></div>
 {% endfor %}
 
+{# ---- Completed (US-08) with "delete several at once" (UC-08) ---- #}
+<div class="d-flex flex-wrap align-items-center justify-content-between mt-4 mb-2 gap-2">
+    <h2 class="h5 mb-0"><i class="bi bi-check2-circle"></i> Completed <span class="badge text-bg-secondary">{{ completed|length }}</span></h2>
+    {% if completed %}
+    {# This form has no boxes of its own. The checkboxes below point at it with form="bulk-form". #}
+    <form method="post" action="{% url 'items_delete_selected' %}" id="bulk-form">
+        {% csrf_token %}
+        <button class="btn btn-sm btn-danger" type="submit" id="bulk-button" disabled><i class="bi bi-trash"></i> Delete selected (<span id="bulk-count">0</span>)</button>
+    </form>
+    {% endif %}
+</div>
+{% for item in completed %}
+    <div class="item-row is-done d-flex align-items-center p-2 mb-2" style="border-left-color: {{ item.course.color|default:'#adb5bd' }}">
+        <input class="form-check-input bulk-box me-3 ms-1" type="checkbox" name="item_ids" value="{{ item.pk }}" form="bulk-form" aria-label="Select {{ item.title }}">
+        <div class="flex-grow-1">
+            <span class="item-title fw-semibold">{{ item.title }}</span>
+            <div>{% include "planner/_item_badges.html" %}</div>
+        </div>
+        <div class="text-nowrap d-flex gap-1">
+            {# done=0 moves the item back to the to-do list. #}
+            <form method="post" action="{% url 'item_complete' item.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="done" value="0">
+                <button class="btn btn-sm btn-outline-secondary" type="submit" title="Not done yet" aria-label="Mark {{ item.title }} not done"><i class="bi bi-arrow-counterclockwise"></i></button>
+            </form>
+            <a class="btn btn-sm btn-outline-danger" href="{% url 'item_delete' item.pk %}" title="Delete" aria-label="Delete {{ item.title }}"><i class="bi bi-trash"></i></a>
+        </div>
+    </div>
+{% empty %}
+    <p class="text-muted">Nothing completed yet.</p>
+{% endfor %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+// A little JavaScript for "Delete selected". JavaScript runs in the BROWSER.
+// It counts the ticked checkboxes, shows the count on the button (UC-08 step 3),
+// and asks "are you sure?" before the form is sent.
+const boxes = document.querySelectorAll(".bulk-box");      // every checkbox
+const bulkButton = document.getElementById("bulk-button");
+const bulkCount = document.getElementById("bulk-count");
+const bulkForm = document.getElementById("bulk-form");
+
+function countTicked() {
+    let ticked = 0;
+    boxes.forEach(function (box) { if (box.checked) { ticked = ticked + 1; } });
+    return ticked;
+}
+
+boxes.forEach(function (box) {
+    // Each time a box is ticked or unticked, update the number on the button.
+    box.addEventListener("change", function () {
+        bulkCount.textContent = countTicked();
+        bulkButton.disabled = countTicked() === 0;    // grey out when 0
+    });
+});
+
+if (bulkForm) {
+    bulkForm.addEventListener("submit", function (event) {
+        // confirm() shows an OK / Cancel box. Cancel stops the form.
+        if (!confirm("Delete " + countTicked() + " selected item(s)?")) {
+            event.preventDefault();
+        }
+    });
+}
+</script>
 {% endblock %}
