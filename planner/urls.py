@@ -58,3 +58,11 @@ urlpatterns += [
     path("items/delete-selected/", item_controller.delete_selected, name="items_delete_selected"),
     path("undo/", item_controller.undo, name="undo"),
 ]
+
+# --- Step 8: Weekly calendar (US-13) ---
+from .controllers import calendar_controller
+
+urlpatterns += [
+    path("calendar/", calendar_controller.show_week, name="calendar"),
+    path("items/<int:item_id>/", calendar_controller.show_item, name="item_detail"),
+]

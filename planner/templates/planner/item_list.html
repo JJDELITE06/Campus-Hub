@@ -14,7 +14,7 @@
 {% if due_soon %}
 <div class="alert alert-warning">
     <strong><i class="bi bi-bell"></i> Due soon:</strong>
-    {% for item in due_soon %}{{ item.title }}{% if not forloop.last %}, {% endif %}{% endfor %}
+    {% for item in due_soon %}<a class="alert-link" href="{% url 'item_detail' item.pk %}">{{ item.title }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
 </div>
 {% endif %}
 
@@ -59,7 +59,7 @@
             <button class="btn btn-outline-success check-button" type="submit" title="Mark complete" aria-label="Mark {{ item.title }} complete"><i class="bi bi-check-lg"></i></button>
         </form>
         <div class="flex-grow-1">
-            <span class="item-title fw-semibold">{{ item.title }}</span>
+            <a class="item-title fw-semibold text-decoration-none text-dark" href="{% url 'item_detail' item.pk %}">{{ item.title }}</a>
             <div>{% include "planner/_item_badges.html" %}</div>
         </div>
         <div class="text-nowrap">
@@ -89,7 +89,7 @@
     <div class="item-row is-done d-flex align-items-center p-2 mb-2" style="border-left-color: {{ item.course.color|default:'#adb5bd' }}">
         <input class="form-check-input bulk-box me-3 ms-1" type="checkbox" name="item_ids" value="{{ item.pk }}" form="bulk-form" aria-label="Select {{ item.title }}">
         <div class="flex-grow-1">
-            <span class="item-title fw-semibold">{{ item.title }}</span>
+            <a class="item-title fw-semibold text-decoration-none" href="{% url 'item_detail' item.pk %}">{{ item.title }}</a>
             <div>{% include "planner/_item_badges.html" %}</div>
         </div>
         <div class="text-nowrap d-flex gap-1">
