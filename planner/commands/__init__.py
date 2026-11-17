@@ -38,3 +38,12 @@ register(MarkCompleteCommand)
 from .delete_selected import DeleteSelectedCommand
 register(DeleteSelectedCommand)
 
+# --- Step 9: Repeating events ---
+from .add_repeating_event import AddRepeatingEventCommand
+register(AddRepeatingEventCommand)
+
+from .edit_repeating_event import EditRepeatingEventCommand
+register(EditRepeatingEventCommand)
+
+from .delete_repeating_event import DeleteRepeatingEventCommand
+register(DeleteRepeatingEventCommand)

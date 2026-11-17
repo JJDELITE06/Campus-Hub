@@ -1,0 +1,72 @@
+{% extends "planner/base.html" %}
+{# event_form.html -- add or edit a repeating event (US-06, UC-04). #}
+{% block title %}{{ heading }} - Campus Hub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-8">
+<div class="card hub-card"><div class="card-body p-4">
+    <h1 class="h3 mb-3">{{ heading }}</h1>
+    {% if event %}<p class="text-muted">Saving changes here updates <strong>every</strong> date of this event.</p>{% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="row g-3">
+            <div class="col-md-8">
+                <label class="form-label" for="title">Title</label>
+                <input class="form-control" id="title" name="title" value="{{ data.title }}" required autofocus>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="item_type">Type</label>
+                <select class="form-select" id="item_type" name="item_type">
+                    {% for creator in creators %}
+                        <option value="{{ creator.type_code }}" {% if data.item_type == creator.type_code %}selected{% endif %}>{{ creator.label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12">
+                <span class="form-label d-block">Repeats on</span>
+                {# One checkbox per day. They all share name="days", so the controller gets a list. #}
+                {% for code, label in day_choices %}
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="days" id="day-{{ code }}" value="{{ code }}" {% if code in chosen_days %}checked{% endif %}>
+                        <label class="form-check-label" for="day-{{ code }}">{{ label }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-6 col-md-3">
+                <label class="form-label" for="start_time">Start time</label>
+                <input class="form-control" id="start_time" name="start_time" type="time" value="{{ data.start_time }}" required>
+            </div>
+            <div class="col-6 col-md-3">
+                <label class="form-label" for="end_time">End time</label>
+                <input class="form-control" id="end_time" name="end_time" type="time" value="{{ data.end_time }}" required>
+            </div>
+            <div class="col-6 col-md-3">
+                <label class="form-label" for="first_date">First date</label>
+                <input class="form-control" id="first_date" name="first_date" type="date" value="{{ data.first_date }}" required>
+            </div>
+            <div class="col-6 col-md-3">
+                <label class="form-label" for="last_date">Last date</label>
+                <input class="form-control" id="last_date" name="last_date" type="date" value="{{ data.last_date }}" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="location">Location</label>
+                <input class="form-control" id="location" name="location" value="{{ data.location }}">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="course_id">Class or activity</label>
+                <select class="form-select" id="course_id" name="course_id">
+                    <option value="">(none)</option>
+                    {% for course in courses %}
+                        <option value="{{ course.pk }}" {% if data.course_id == course.pk|stringformat:"s" %}selected{% endif %}>{{ course.get_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="mt-4 d-flex gap-2">
+            <button class="btn btn-primary" type="submit"><i class="bi bi-check-lg"></i> Save</button>
+            <a class="btn btn-outline-secondary" href="{% url 'calendar' %}">Cancel</a>
+        </div>
+    </form>
+</div></div>
+</div></div>
+{% endblock %}

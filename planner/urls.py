@@ -66,3 +66,13 @@ urlpatterns += [
     path("calendar/", calendar_controller.show_week, name="calendar"),
     path("items/<int:item_id>/", calendar_controller.show_item, name="item_detail"),
 ]
+
+# --- Step 9: Repeating events (US-06) ---
+from .controllers import event_controller
+
+urlpatterns += [
+    path("events/add/", event_controller.add_event, name="event_add"),
+    path("events/<int:event_id>/", event_controller.show_event, name="event_detail"),
+    path("events/<int:event_id>/edit/", event_controller.edit_event, name="event_edit"),
+    path("events/<int:event_id>/delete/", event_controller.delete_event, name="event_delete"),
+]

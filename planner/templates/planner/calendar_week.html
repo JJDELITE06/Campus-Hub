@@ -10,6 +10,7 @@
         <a class="btn btn-outline-primary" href="?week={{ previous_week|date:'Y-m-d' }}" aria-label="Previous week"><i class="bi bi-chevron-left"></i></a>
         <a class="btn btn-outline-primary" href="{% url 'calendar' %}">Today</a>
         <a class="btn btn-outline-primary" href="?week={{ next_week|date:'Y-m-d' }}" aria-label="Next week"><i class="bi bi-chevron-right"></i></a>
+        <a class="btn btn-primary" href="{% url 'event_add' %}"><i class="bi bi-arrow-repeat"></i> Add repeating event</a>
     </div>
 </div>
 
@@ -21,6 +22,13 @@
 {% for day in days %}
     <div class="day-box {% if day.is_today %}is-today{% endif %}">
         <div class="fw-bold">{{ day.date|date:"D" }} <span class="text-muted fw-normal">{{ day.date|date:"M j" }}</span></div>
+
+        {# Repeating events that happen on this day. The link remembers WHICH date was clicked. #}
+        {% for event in day.events %}
+            <a class="calendar-chip" href="{% url 'event_detail' event.pk %}?date={{ day.date|date:'Y-m-d' }}" style="border-left-color: {{ event.course.color|default:'#adb5bd' }}">
+                <i class="bi bi-arrow-repeat"></i> {{ event.start_time|time:"g:i A" }} {{ event.title }}
+            </a>
+        {% endfor %}
 
         {# Single items due on this day. #}
         {% for item in day.items %}
