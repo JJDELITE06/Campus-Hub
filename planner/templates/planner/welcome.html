@@ -5,6 +5,12 @@
 <div class="hero p-5 mb-4 text-center">
     <h1 class="display-5 fw-bold"><i class="bi bi-mortarboard-fill"></i> Campus Hub</h1>
     <p class="lead">Assignments, tests, meetings, job shifts and clubs. Everything in one place.</p>
+    {% if user.is_authenticated %}
+        <p class="mb-0">You are logged in as {{ user.first_name|default:user.email }}.</p>
+    {% else %}
+        <a class="btn btn-light btn-lg me-2" href="{% url 'signup' %}">Create a free account</a>
+        <a class="btn btn-outline-light btn-lg" href="{% url 'login' %}">Log in</a>
+    {% endif %}
 </div>
 
 <div class="row g-3">

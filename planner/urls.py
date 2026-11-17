@@ -23,3 +23,12 @@ from .controllers import home_controller
 urlpatterns += [
     path("", home_controller.home, name="home"),
 ]
+
+# --- Step 2: Accounts (US-01, US-02) ---
+from .controllers import account_controller
+
+urlpatterns += [
+    path("signup/", account_controller.sign_up, name="signup"),
+    path("login/", account_controller.log_in, name="login"),
+    path("logout/", account_controller.log_out, name="logout"),
+]

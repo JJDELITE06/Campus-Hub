@@ -33,8 +33,17 @@
                 <ul class="navbar-nav me-auto">
                 </ul>
                 <span class="navbar-text me-3"><i class="bi bi-person-circle"></i> {{ user.first_name|default:user.email }}</span>
+                {# Logging out CHANGES something (it ends the session), so it is a POST form, not a link. #}
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-light btn-sm" type="submit">Log out</button>
+                </form>
             {% else %}
                 {# Menu for a visitor. #}
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log in</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Sign up</a></li>
+                </ul>
             {% endif %}
         </div>
     </div>
