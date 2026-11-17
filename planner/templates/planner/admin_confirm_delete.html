@@ -1,0 +1,18 @@
+{% extends "planner/base.html" %}
+{# admin_confirm_delete.html -- "are you sure" before deleting a student (US-12). #}
+{% block title %}Delete student - Campus Hub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center"><div class="col-md-7">
+<div class="card hub-card"><div class="card-body p-4 text-center">
+    <i class="bi bi-exclamation-triangle text-danger fs-1"></i>
+    <h1 class="h4">Are you sure?</h1>
+    <p>This deletes <strong>{{ student.get_name }}</strong> ({{ student.get_email }}) and all of their classes, items and events. This can't be undone.</p>
+    <form method="post" class="d-flex justify-content-center gap-2">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit">Yes, delete this student</button>
+        <a class="btn btn-outline-secondary" href="{% url 'manage_students' %}">Cancel</a>
+    </form>
+</div></div>
+</div></div>
+{% endblock %}

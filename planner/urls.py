@@ -83,3 +83,11 @@ from .controllers import settings_controller
 urlpatterns += [
     path("settings/", settings_controller.show_settings, name="settings"),
 ]
+
+# --- Step 11: Administrator pages (US-12) ---
+from .controllers import admin_controller
+
+urlpatterns += [
+    path("manage/students/", admin_controller.show_students, name="manage_students"),
+    path("manage/students/<int:student_id>/delete/", admin_controller.delete_student, name="manage_student_delete"),
+]
