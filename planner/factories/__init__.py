@@ -20,3 +20,24 @@ from .registry import all_creators, get_creator, get_creator_or_default, registe
 from .assignment import AssignmentCreator
 register(AssignmentCreator)
 
+# --- Step 5: one small file per type (a good task to share out) ---
+from .test_quiz import TestQuizCreator
+register(TestQuizCreator)
+
+from .project import ProjectCreator
+register(ProjectCreator)
+
+from .meeting import MeetingCreator
+register(MeetingCreator)
+
+from .class_session import ClassSessionCreator
+register(ClassSessionCreator)
+
+from .job_shift import JobShiftCreator
+register(JobShiftCreator)
+
+from .club_meeting import ClubMeetingCreator
+register(ClubMeetingCreator)
+
+from .other import OtherCreator
+register(OtherCreator)
