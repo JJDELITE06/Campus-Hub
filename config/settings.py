@@ -106,7 +106,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# Our students are in the Eastern time zone, so "today" means today in New York.
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
@@ -122,3 +123,21 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# ============================================================================
+# Campus Hub settings (added by the team)
+# ============================================================================
+
+# Where to send someone who opens a page that needs a login.
+LOGIN_URL = "login"
+
+# EMAIL: the "console" backend PRINTS emails in the terminal instead of
+# sending them. Safe for development. For real email, switch this to the
+# smtp backend and put the provider's details here. Never put the email
+# password in Git: read it from an environment variable instead.
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "Campus Hub <reminders@campushub.example>"
+
+# The link that goes in the reminder email (US-10). Change it when we deploy.
+SITE_URL = "http://127.0.0.1:8000/login/"

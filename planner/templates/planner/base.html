@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{# base.html -- the shared "frame" around EVERY Campus Hub page. #}
+{# Other pages start with {% extends "planner/base.html" %} and only fill in the "content" block. #}
+{# To change the top bar or add a menu link, edit this ONE file. #}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    {# Makes the page fit phone screens instead of showing a tiny desktop page. #}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Campus Hub{% endblock %}</title>
+
+    {# Bootstrap = ready-made styles. Bootstrap Icons = the little pictures (bi-...). Both come from a public server (a CDN). #}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    {# Our own extra styles: planner/static/planner/campus_hub.css #}
+    <link rel="stylesheet" href="{% static 'planner/campus_hub.css' %}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark hub-navbar mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{% url 'home' %}"><i class="bi bi-mortarboard-fill"></i> Campus Hub</a>
+
+        {# The "hamburger" button that opens the menu on a phone. #}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-menu" aria-label="Open menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="main-menu">
+            {% if user.is_authenticated %}
+                {# Menu for someone who is logged in. #}
+                <ul class="navbar-nav me-auto">
+                </ul>
+                <span class="navbar-text me-3"><i class="bi bi-person-circle"></i> {{ user.first_name|default:user.email }}</span>
+            {% else %}
+                {# Menu for a visitor. #}
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<main class="container pb-5">
+
+    {# MESSAGES: the green/red notes a controller adds with messages.success(...). #}
+    {% for message in messages %}
+        <div class="alert alert-{% if message.level_tag == 'error' %}danger{% else %}{{ message.level_tag }}{% endif %} d-flex align-items-center justify-content-between" role="alert">
+            <span>{{ message }}</span>
+        </div>
+    {% endfor %}
+
+    {# ERRORS: a list of problems from validate() or a command. #}
+    {% if errors %}
+        <div class="alert alert-danger" role="alert">
+            <strong>Please fix the following:</strong>
+            <ul class="mb-0">
+                {% for error in errors %}<li>{{ error }}</li>{% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {# Each page puts its own content here. #}
+    {% block content %}{% endblock %}
+</main>
+
+{# Bootstrap's JavaScript (needed for the phone menu). #}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>
