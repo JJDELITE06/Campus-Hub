@@ -1,4 +1,4 @@
-# US-12: Campus-Hub Team 5
+# US-12 - Administrator Deletes a User Account
 
 ## User story
 

@@ -1,4 +1,4 @@
-# US-04: Campus-Hub Team 5
+# US-04 - Delete Items
 
 ## User story
 

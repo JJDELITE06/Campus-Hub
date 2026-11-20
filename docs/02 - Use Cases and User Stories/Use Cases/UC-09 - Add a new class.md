@@ -1,4 +1,4 @@
-# UC-09 Campus-Hub Team 5
+# UC-09 - Add a new class
 
 | Use Case – 09 | Add a new class  (from Student 2; no user story yet) |
 |---|---|

@@ -1,4 +1,4 @@
-# UC-13 Campus-Hub Team 5
+# UC-13 - View the weekly calendar
 
 | Use Case – 13 | View the weekly calendar  (goes with US-13) |
 |---|---|

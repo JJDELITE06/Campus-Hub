@@ -1,4 +1,4 @@
-# UC-07 Campus-Hub Team 5
+# UC-07 - Mark an item complete
 
 | Use Case – 07 | Mark an item complete  (goes with US-08) |
 |---|---|

@@ -1,4 +1,4 @@
-# US-07: Campus-Hub Team 5
+# US-07 - Edit an Item
 
 ## User story
 

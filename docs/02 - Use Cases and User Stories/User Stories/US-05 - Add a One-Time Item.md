@@ -1,4 +1,4 @@
-# US-05: Campus-Hub Team 5
+# US-05 - Add a One-Time Item
 
 ## User story
 

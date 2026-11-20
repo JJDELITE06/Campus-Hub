@@ -1,4 +1,4 @@
-# UC-02 Campus-Hub Team 5
+# UC-02 - Log in and log out
 
 | Use Case – 02 | Log in and log out  (goes with US-02) |
 |---|---|

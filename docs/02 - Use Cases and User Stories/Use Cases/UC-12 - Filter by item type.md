@@ -1,4 +1,4 @@
-# UC-12 Campus-Hub Team 5
+# UC-12 - Filter by item type
 
 | Use Case – 12 | Filter by item type  (goes with US-09) |
 |---|---|

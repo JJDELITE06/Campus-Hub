@@ -1,4 +1,4 @@
-# US-06: Campus-Hub Team 5
+# US-06 - Add a Repeating Event
 
 ## User story
 

@@ -1,4 +1,4 @@
-# UC-01 Campus-Hub Team 5
+# UC-01 - Create an account
 
 | Use Case – 01 | Create an account  (goes with US-01) |
 |---|---|

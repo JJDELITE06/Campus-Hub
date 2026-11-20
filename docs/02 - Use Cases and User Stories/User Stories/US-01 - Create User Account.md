@@ -1,4 +1,4 @@
-# US-01: Campus-Hub Team 5
+# US-01 - Create User Account
 
 ## User story
 

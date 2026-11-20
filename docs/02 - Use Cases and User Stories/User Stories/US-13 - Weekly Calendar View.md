@@ -1,4 +1,4 @@
-# US-13 (new): Campus-Hub Team 5
+# US-13 - Weekly Calendar View (new)
 
 ## User story
 

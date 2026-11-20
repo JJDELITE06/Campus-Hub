@@ -1,4 +1,4 @@
-# UC-08 Campus-Hub Team 5
+# UC-08 - Delete several completed assignments at once
 
 | Use Case – 08 | Delete several completed assignments at once  (from Student 2; goes with US-04) |
 |---|---|

@@ -1,4 +1,4 @@
-# UC-03 Campus-Hub Team 5
+# UC-03 - Add a single item
 
 | Use Case – 03 | Add a single item  (goes with US-05) |
 |---|---|

@@ -1,4 +1,4 @@
-# UC-04 Campus-Hub Team 5
+# UC-04 - Add a repeating event
 
 | Use Case – 04 | Add a repeating event  (goes with US-06) |
 |---|---|

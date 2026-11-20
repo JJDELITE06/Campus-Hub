@@ -1,4 +1,4 @@
-# UC-05 Campus-Hub Team 5
+# UC-05 - Edit an item
 
 | Use Case – 05 | Edit an item  (goes with US-07) |
 |---|---|

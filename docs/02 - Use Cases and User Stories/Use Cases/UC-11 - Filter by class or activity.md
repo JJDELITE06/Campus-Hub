@@ -1,4 +1,4 @@
-# UC-11 Campus-Hub Team 5
+# UC-11 - Filter by class or activity
 
 | Use Case – 11 | Filter by class or activity  (goes with US-03) |
 |---|---|

@@ -1,4 +1,4 @@
-# US-02: Campus-Hub Team 5
+# US-02 - Log In and Log Out
 
 ## User story
 

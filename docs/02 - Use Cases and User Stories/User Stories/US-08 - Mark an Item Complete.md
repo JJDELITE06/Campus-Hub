@@ -1,4 +1,4 @@
-# US-08: Campus-Hub Team 5
+# US-08 - Mark an Item Complete
 
 ## User story
 

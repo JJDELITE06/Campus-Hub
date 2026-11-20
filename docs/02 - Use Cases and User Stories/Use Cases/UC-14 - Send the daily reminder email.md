@@ -1,4 +1,4 @@
-# UC-14 Campus-Hub Team 5
+# UC-14 - Send the daily reminder email
 
 | Use Case – 14 | Send the daily reminder email  (goes with US-10) |
 |---|---|

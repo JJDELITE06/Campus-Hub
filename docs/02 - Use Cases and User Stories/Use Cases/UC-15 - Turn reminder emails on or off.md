@@ -1,4 +1,4 @@
-# UC-15 Campus-Hub Team 5
+# UC-15 - Turn reminder emails on or off
 
 | Use Case – 15 | Turn reminder emails on or off  (goes with US-11) |
 |---|---|

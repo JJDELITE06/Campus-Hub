@@ -1,4 +1,4 @@
-# UC-10 Campus-Hub Team 5
+# UC-10 - Drop a class
 
 | Use Case – 10 | Drop a class  (from Student 2; no user story yet) |
 |---|---|

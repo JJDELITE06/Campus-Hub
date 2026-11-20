@@ -1,4 +1,4 @@
-# US-11: Campus-Hub Team 5
+# US-11 - Turn Off the Reminder Email
 
 ## User story
 

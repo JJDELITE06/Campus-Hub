@@ -1,4 +1,4 @@
-# US-10: Campus-Hub Team 5
+# US-10 - Daily Reminder Email
 
 ## User story
 

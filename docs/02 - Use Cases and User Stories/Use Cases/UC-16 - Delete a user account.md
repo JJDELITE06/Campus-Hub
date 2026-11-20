@@ -1,4 +1,4 @@
-# UC-16 Campus-Hub Team 5
+# UC-16 - Delete a user account
 
 | Use Case – 16 | Delete a user account  (goes with US-12) |
 |---|---|

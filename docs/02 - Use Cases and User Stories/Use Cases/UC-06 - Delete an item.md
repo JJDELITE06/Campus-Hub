@@ -1,4 +1,4 @@
-# UC-06 Campus-Hub Team 5
+# UC-06 - Delete an item
 
 | Use Case – 06 | Delete an item  (goes with US-04) |
 |---|---|

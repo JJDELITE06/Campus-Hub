@@ -1,4 +1,4 @@
-# US-03: Campus-Hub Team 5
+# US-03 - View Items for One Class
 
 ## User story
 

@@ -1,4 +1,4 @@
-# US-09: Campus-Hub Team 5
+# US-09 - Filter by Item Type
 
 ## User story
 
