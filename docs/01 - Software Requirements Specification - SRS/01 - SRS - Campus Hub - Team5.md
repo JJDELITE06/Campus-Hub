@@ -24,6 +24,8 @@ There are three kinds of people (personas, actors) that  are going to use Campus
 2. Off campus student who has similar classes but could have off campus job etc.
 3. The administrator of Campus Hub who has to fix problems and deal with users who should not be there.
 
+**TODO Need Names of Actors here to match our Use Cases and User Stories**
+
 
 
 ## Functional Requirements
