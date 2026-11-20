@@ -25,7 +25,16 @@ SECRET_KEY = 'django-insecure-m)!$$b-5$0ml7k#mdcgtxj1epsjh$_9@m7umpousa37xj9g5*7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = the list of names/addresses Django will answer to.
+# It's a safety check: requests addressed to anything else are refused.
+#
+# While DEBUG is True (our class project on a home network) we allow any
+# address ("*"), so other PCs and phones can reach us by this PC's IP.
+# That also means nothing breaks when the router gives the PC a new IP.
+#
+# When DEBUG is False (a real deployment), the list is empty again and
+# must be filled in with the real website name, e.g. ["campushub.example.com"].
+ALLOWED_HOSTS = ["*"] if DEBUG else []
 
 
 # Application definition

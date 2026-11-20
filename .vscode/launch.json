@@ -46,6 +46,28 @@
 
             // false = only stop in OUR code, not inside Django's own code.
             "justMyCode": true
+        },
+        {
+            // SECOND RECIPE: lets OTHER computers and phones on your home
+            // network open the app. Pick it from the dropdown next to the
+            // green play button.
+            //
+            // "0.0.0.0:8000" means: listen on EVERY network connection this
+            // PC has (Wi-Fi, Ethernet), on port 8000. The first recipe only
+            // listens on 127.0.0.1 = "this computer only".
+            //
+            // On the other device, browse to http://<this PC's IP>:8000
+            // (find the IP by typing  ipconfig  in a terminal, "IPv4 Address").
+            //
+            // Home network only! The development server is not secure.
+            "name": "Campus Hub: Run on my home network",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": ["runserver", "0.0.0.0:8000"],
+            "django": true,
+            "console": "integratedTerminal",
+            "justMyCode": true
         }
     ]
 }
