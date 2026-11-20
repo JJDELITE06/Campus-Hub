@@ -1,0 +1,30 @@
+{% extends "planner/base.html" %}
+{# welcome.html -- what a visitor sees before logging in. #}
+
+{% block content %}
+<div class="hero p-5 mb-4 text-center">
+    <h1 class="display-5 fw-bold"><i class="bi bi-mortarboard-fill"></i> Campus Hub</h1>
+    <p class="lead">Assignments, tests, meetings, job shifts and clubs. Everything in one place.</p>
+    {% if user.is_authenticated %}
+        <p class="mb-0">You are logged in as {{ user.first_name|default:user.email }}.</p>
+    {% else %}
+        <a class="btn btn-light btn-lg me-2" href="{% url 'signup' %}">Create a free account</a>
+        <a class="btn btn-outline-light btn-lg" href="{% url 'login' %}">Log in</a>
+    {% endif %}
+</div>
+
+<div class="row g-3">
+    <div class="col-md-4"><div class="card hub-card h-100"><div class="card-body">
+        <h2 class="h5"><i class="bi bi-list-check text-primary"></i> One list</h2>
+        <p class="mb-0 text-muted">See everything that is due, soonest first, and tick things off.</p>
+    </div></div></div>
+    <div class="col-md-4"><div class="card hub-card h-100"><div class="card-body">
+        <h2 class="h5"><i class="bi bi-calendar-week text-success"></i> Your week</h2>
+        <p class="mb-0 text-muted">Spot the busy days early on the weekly calendar.</p>
+    </div></div></div>
+    <div class="col-md-4"><div class="card hub-card h-100"><div class="card-body">
+        <h2 class="h5"><i class="bi bi-envelope-check text-danger"></i> Daily reminder</h2>
+        <p class="mb-0 text-muted">A morning email lists what is coming up this week.</p>
+    </div></div></div>
+</div>
+{% endblock %}

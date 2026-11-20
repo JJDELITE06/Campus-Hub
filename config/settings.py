@@ -25,7 +25,16 @@ SECRET_KEY = 'django-insecure-m)!$$b-5$0ml7k#mdcgtxj1epsjh$_9@m7umpousa37xj9g5*7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = the list of names/addresses Django will answer to.
+# It's a safety check: requests addressed to anything else are refused.
+#
+# While DEBUG is True (our class project on a home network) we allow any
+# address ("*"), so other PCs and phones can reach us by this PC's IP.
+# That also means nothing breaks when the router gives the PC a new IP.
+#
+# When DEBUG is False (a real deployment), the list is empty again and
+# must be filled in with the real website name, e.g. ["campushub.example.com"].
+ALLOWED_HOSTS = ["*"] if DEBUG else []
 
 
 # Application definition
@@ -106,7 +115,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# Our students are in the Eastern time zone, so "today" means today in New York.
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
@@ -122,3 +132,21 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# ============================================================================
+# Campus Hub settings (added by the team)
+# ============================================================================
+
+# Where to send someone who opens a page that needs a login.
+LOGIN_URL = "login"
+
+# EMAIL: the "console" backend PRINTS emails in the terminal instead of
+# sending them. Safe for development. For real email, switch this to the
+# smtp backend and put the provider's details here. Never put the email
+# password in Git: read it from an environment variable instead.
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "Campus Hub <reminders@campushub.example>"
+
+# The link that goes in the reminder email (US-10). Change it when we deploy.
+SITE_URL = "http://127.0.0.1:8000/login/"

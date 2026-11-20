@@ -1,0 +1,26 @@
+{% extends "planner/base.html" %}
+{# login.html -- the log-in form (US-02). #}
+{% block title %}Log in - Campus Hub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card hub-card"><div class="card-body p-4">
+            <h1 class="h3 mb-3">Log in</h1>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-control" id="email" name="email" type="email" value="{{ data.email }}" required autofocus>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-control" id="password" name="password" type="password" required>
+                </div>
+                <button class="btn btn-primary w-100" type="submit">Log in</button>
+            </form>
+            <p class="mt-3 mb-0 text-center">New here? <a href="{% url 'signup' %}">Create an account</a></p>
+        </div></div>
+    </div>
+</div>
+{% endblock %}

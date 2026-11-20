@@ -1,0 +1,23 @@
+{% extends "planner/base.html" %}
+{# item_detail.html -- everything about one item (opened from the list or the calendar, UC-13 step 6). #}
+{% block title %}{{ item.title }} - Campus Hub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-8">
+<div class="card hub-card"><div class="card-body p-4">
+    <h1 class="h3">{{ item.title }} {% if item.completed %}<span class="badge text-bg-success">Done</span>{% endif %}</h1>
+    <div class="mb-3">{% include "planner/_item_badges.html" %}</div>
+    {% if item.notes %}
+        <h2 class="h6">Notes</h2>
+        {# linebreaks keeps the new lines the student typed. #}
+        <div>{{ item.notes|linebreaks }}</div>
+    {% endif %}
+    <div class="d-flex flex-wrap gap-2 mt-3">
+        <a class="btn btn-primary" href="{% url 'item_edit' item.pk %}"><i class="bi bi-pencil"></i> Edit</a>
+        <a class="btn btn-outline-danger" href="{% url 'item_delete' item.pk %}"><i class="bi bi-trash"></i> Delete</a>
+        <a class="btn btn-outline-secondary" href="{% url 'item_list' %}">Back to list</a>
+        <a class="btn btn-outline-secondary" href="{% url 'calendar' %}?week={{ item.due_date|date:'Y-m-d' }}">See on calendar</a>
+    </div>
+</div></div>
+</div></div>
+{% endblock %}
