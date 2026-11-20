@@ -18,7 +18,7 @@ This is Campus Hub App software requirements specification for Sacred Heart Univ
 
 ## Users (Personas)
 
-There are three kinds of people (personas) that  are going to use Campus Hub.
+There are three kinds of people (personas, actors) that  are going to use Campus Hub.
 
 1. On campus student who has maybe some club meetings, classes, tests, etc.
 2. Off campus student who has similar classes but could have off campus job etc.

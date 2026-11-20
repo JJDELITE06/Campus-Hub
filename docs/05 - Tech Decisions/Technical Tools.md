@@ -1,14 +1,3 @@
-Tech Stack
-The programming language and other technology we will use to write our program)
-
-**Programming Language - Python**
-* Python is the language we all have some experience with, so it seem like it will work and have less learning curve for the group members. We will try to use this as much as possible unless there is something it can't do that we need to do.
-
-Database - Django + SQLite
-* We do not have a database course or database experience yet.
-* Django is a framework that takes the complexity of the database away
-* It uses easy to understand Python syntax and automatically stores our objects in SQLite
-* It automatically takes Python objects, creates a database table if needed, stores, updates, and deletes objects in the database, all without having to know database programming language.
   
 **Documentation Tools  - Markdown + VSCode + Markdown All In One**
 * We will use simple .md (markdown) files as much as we can since they seem to be native to Git and can be edited and rendered right in VSCode
